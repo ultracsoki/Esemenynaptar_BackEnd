@@ -6,42 +6,47 @@
         xmlns:local="clr-namespace:Esemenynaptar_BackEnd"
         mc:Ignorable="d"
         Title="EventForm" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200"/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+			<RowDefinition Height="50"/>
+		</Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="Név:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Grid.Row="1"  Content="Részletek:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Grid.Row="2"  Content="Dátum:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Grid.Row="3"  Content="Egész napos(mm/dd/yyyy):" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16"/>
-        <Label Grid.Row="4"  Content="Idő:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Grid.Row="5"  Content="Prioritás:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
-        <Label Grid.Row="6"  Content="Emlékeztető:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+		<Label Grid.Row="0" Content="Név:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+		<Label Grid.Row="1"  Content="Részletek:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+		<Label Grid.Row="2"  Content="Dátum:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+		<Label Grid.Row="3"  Content="Egész napos(mm/dd/yyyy):" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="16"/>
+		<Label Grid.Row="4"  Content="Idő:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+		<Label Grid.Row="5"  Content="Prioritás:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
+		<Label Grid.Row="6"  Content="Emlékeztető:" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="20"/>
 
-        <TextBox x:Name="nameInput" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
-        <TextBox x:Name="detailsInput" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="20"/>
-        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Margin="134,38,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-        <TextBox x:Name="datumInput" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
-        <CheckBox x:Name="egeszNaposInput" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" FontSize="20" Checked="egeszNaposInput_Checked"/>
-        <TextBox x:Name="idoInput" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
-        <TextBox x:Name="prioritasInput" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
-        <TextBox x:Name="emlekeztetoInput" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
+		<TextBox x:Name="nameInput" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
+		<TextBox x:Name="detailsInput" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="20"/>
+		<DatePicker x:Name="dateInput" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"/>
+		<CheckBox x:Name="egeszNaposInput" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" FontSize="20" Click="egeszNaposInput_Click"/>
+		<TextBox x:Name="idoInput" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" FontSize="20"/>
+		<DatePicker x:Name="emlekeztetoInput" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center"/>
 
-        <Button x:Name="buttonAdd" Grid.Row="7" Grid.Column="1" Content="Hozzáad" FontSize="22" Margin="0,15,0,0" Click="Add_Click"/>
-        <Button x:Name="buttonUpdate" Visibility="Collapsed" Grid.Row="7" Grid.Column="1" Content="Módosít" FontSize="22" Margin="0,15,0,0" Click="Update_Click"/>
+		<Button x:Name="buttonAdd" Grid.Row="7" Grid.Column="1" Content="Hozzáad" FontSize="22" Margin="0,15,0,0" Click="Add_Click"/>
+		<Button x:Name="buttonUpdate" Visibility="Collapsed" Grid.Row="7" Grid.Column="1" Content="Módosít" FontSize="22" Margin="0,15,0,0" Click="Update_Click"/>
+		<ComboBox x:Name="prioritasCombobox" HorizontalAlignment="Left" Grid.Column="1"  Grid.Row="5" VerticalAlignment="Center" Width="120">
+
+			<ComboBoxItem IsSelected="True">-</ComboBoxItem>
+			<ComboBoxItem>Alacsony</ComboBoxItem>
+			<ComboBoxItem>Közepes</ComboBoxItem>
+			<ComboBoxItem>Magas</ComboBoxItem>
+		</ComboBox>
 
 
-    </Grid>
+	</Grid>
 </Window>

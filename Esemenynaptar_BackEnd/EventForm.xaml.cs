@@ -41,11 +41,19 @@ namespace Esemenynaptar_BackEnd
             {
                 nameInput.Text = this.esemeny.Nev;
                 detailsInput.Text = this.esemeny.Reszletek;
-                datumInput.Text = this.esemeny.Datum;
+                dateInput.Text = this.esemeny.Datum.ToString();
                 egeszNaposInput.IsChecked = this.esemeny.EgeszNapos;
+                if (egeszNaposInput.IsChecked == false)
+                {
+                    idoInput.IsEnabled = true;
+                }
+                else
+                {
+					idoInput.IsEnabled = false;
+				}
                 idoInput.Text = this.esemeny.Ido;
-                prioritasInput.Text = this.esemeny.Prioritas;
-                emlekeztetoInput.Text = this.esemeny.Emlekezteto;
+                prioritasCombobox.Text = this.esemeny.Prioritas;
+                emlekeztetoInput.Text = this.esemeny.Emlekezteto.ToString();
             }
             catch (Exception)
             {
@@ -66,10 +74,11 @@ namespace Esemenynaptar_BackEnd
                     MessageBox.Show("Az adatfelvétel sikeres volt!");
                     nameInput.Text = "";
                     detailsInput.Text = "";
-                    datumInput.Text = "";
+                    dateInput.SelectedDate = null;
+                    dateInput.DisplayDate = DateTime.Today; ;
                     egeszNaposInput.IsChecked = false;
                     idoInput.Text = "";
-                    prioritasInput.Text = "";
+                    prioritasCombobox.SelectedIndex = 0;
                     emlekeztetoInput.Text = "";
                 }
                 else
@@ -98,94 +107,106 @@ namespace Esemenynaptar_BackEnd
                 {
                     MessageBox.Show("Hiba történt a módosítás során!");
                 }
-            }
+        }
             catch (Exception)
             {
 
-                throw;
-            }
-        }
+			}
+}
 
         private Event CreateEventFromFields()
         {
+            bool sikeres = true;
             string nev = "";
             string reszletek = "";
-            DateOnly datum;
+            string datum = "";
             bool egeszNapos = false;
             TimeOnly ido;
             string nincsIdo = "";
             string prioritas = "";
-            DateOnly emlekezteto;
-            string nincsEmlekezteto = "";
+            string emlekezteto = "";
             try
             {
                 nev = nameInput.Text.Trim();
                 reszletek = detailsInput.Text.Trim();
-                prioritas = prioritasInput.Text.Trim();
-                string[] datumTomb = datumInput.Text.Trim().Split('/');
-                if (datumInput.Text.Trim() != "")
+                prioritas = prioritasCombobox.Text.Trim();
+                string[] datumTomb = dateInput.Text.Trim().Split('/');
+                if (dateInput.Text.Trim() != "")
                 {
-                    datum = new DateOnly(int.Parse(datumTomb[2]), int.Parse(datumTomb[0]), int.Parse(datumTomb[1]));
+                    datum = dateInput.Text;
                 }
                 egeszNapos = Convert.ToBoolean(egeszNaposInput.IsChecked);
                 string[] datumIdo = idoInput.Text.Trim().Split(':');
                 if (idoInput.Text.Trim() != "")
                 {
-                    ido = new TimeOnly(int.Parse(datumIdo[0]), int.Parse(datumIdo[1]));
+				    ido = new TimeOnly(int.Parse(datumIdo[0]), int.Parse(datumIdo[1]));
                 }
                 string[] datumEmlekezteto = emlekeztetoInput.Text.Trim().Split('/');
                 if (emlekeztetoInput.Text.Trim() != "")
                 {
-                    emlekezteto = new DateOnly(int.Parse(datumEmlekezteto[2]), int.Parse(datumEmlekezteto[0]), int.Parse(datumEmlekezteto[1]));
+                    emlekezteto = emlekeztetoInput.Text;
                 }
             }
             catch (Exception)
             {
+                sikeres = false;
                 MessageBox.Show("Rossz formátumban adta meg az adatokat!");
             }
-
-            if (string.IsNullOrEmpty(nev))
+            if (sikeres == true)
             {
-                throw new Exception("A név kitöltése kötelező!");
-            }
-            if (string.IsNullOrEmpty(datumInput.Text))
-            {
-                throw new Exception("A dátum kitöltése kötelező!");
-            }
-            //else if (string.IsNullOrEmpty(idoInput.Text))
-            //{
-            //    idoInput.Text = "9:00";
-            //    ido = new TimeOnly(9,00);
-            //}
-            Event esemeny = new Event();
-            esemeny.Nev = nev;
-            esemeny.Reszletek = reszletek;
-            esemeny.Datum = datum.ToString();
-            esemeny.EgeszNapos = egeszNapos;
-            esemeny.Ido = ido.ToString();
-            esemeny.Prioritas = prioritas;
-            if (emlekeztetoInput.Text.Trim() != "")
-            {
-                esemeny.Emlekezteto = emlekezteto.ToString();
-            }
+				if (string.IsNullOrEmpty(nev))
+				{
+					throw new Exception("A név kitöltése kötelező!");
+				}
+				if (string.IsNullOrEmpty(dateInput.Text))
+				{
+					throw new Exception("A dátum kitöltése kötelező!");
+				}
+				Event esemeny = new Event();
+				esemeny.Nev = nev;
+				esemeny.Reszletek = reszletek;
+				esemeny.Datum = Convert.ToDateTime(datum);
+				esemeny.EgeszNapos = egeszNapos;
+				esemeny.Ido = ido.ToString();
+				esemeny.Prioritas = prioritas;
+				if (emlekeztetoInput.Text.Trim() != "")
+				{
+					esemeny.Emlekezteto = Convert.ToDateTime(emlekezteto);
+				}
+				else
+				{
+					//esemeny.Emlekezteto = Convert.ToDateTime(nincsEmlekezteto);
+					esemeny.Emlekezteto = new DateTime();
+				}
+				if (idoInput.Text.Trim() != "")
+				{
+					esemeny.Ido = ido.ToString();
+				}
+				else
+				{
+					esemeny.Ido = nincsIdo;
+				}
+				return esemeny;
+			}
             else
             {
-                esemeny.Emlekezteto = nincsEmlekezteto;
+                return null;
             }
-            if (idoInput.Text.Trim() != "")
-            {
-                esemeny.Ido = ido.ToString();
-            }
-            else
-            {
-                esemeny.Ido = nincsIdo;
-            }
-            return esemeny;
+            
         }
 
-        private void egeszNaposInput_Checked(object sender, RoutedEventArgs e)
-        {
-            idoInput.Text = "";
-        }
-    }
+		private void egeszNaposInput_Click(object sender, RoutedEventArgs e)
+		{
+			if (idoInput.IsEnabled == false)
+			{
+				idoInput.Text = string.Empty;
+				idoInput.IsEnabled = true;
+			}
+			else
+			{
+				idoInput.IsEnabled = false;
+			}
+		}
+
+	}
 }

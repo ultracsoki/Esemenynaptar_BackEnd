@@ -19,7 +19,7 @@ namespace Esemenynaptar_BackEnd
         public string Nev { get; set; }
         [JsonProperty("datum")]
         //DateOnly
-        public string Datum { get; set; }
+        public DateTime Datum { get; set; }
         [JsonProperty("prioritas")]
         public string Prioritas { get; set; }
         [JsonProperty("reszletek")]
@@ -28,6 +28,7 @@ namespace Esemenynaptar_BackEnd
         public bool EgeszNapos { get; set; }
         [JsonProperty("emlekezteto")]
         //DateOnly
-        public string Emlekezteto { get; set; }
+        //public DateTime Emlekezteto { get; set; }
+        public DateTime Emlekezteto { get; set; }
     }
 }
